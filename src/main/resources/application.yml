@@ -1,0 +1,53 @@
+server:
+  port: 8080
+
+spring:
+  redis:
+    database: 0
+    timeout: 120000
+    #选择一种集群的方式
+    sentinel:
+      master: mymaster
+      nodes: 192.168.176.131:26379,192.168.176.131:26380,192.168.176.131:26381
+    cluster:
+      nodes:  192.168.176.131:8001 192.168.176.131:8002 192.168.176.131:8003 192.168.176.132:8004 192.168.176.132:8005 192.168.176.132:8006 192.168.176.133:8007 192.168.176.133:8008 192.168.176.133:8009
+    redisson:
+      file: classpath:redisson.yaml
+      config:
+        clusterServersConfig:
+          idleConnectionTimeout: 10000
+          connectTimeout: 10000
+          timeout: 3000
+          retryAttempts: 3
+          retryInterval: 1500
+          failedSlaveReconnectionInterval: 3000
+          failedSlaveCheckInterval: 60000
+          password: null
+          subscriptionsPerConnection: 5
+          clientName: null
+          loadBalancer: !<org.redisson.connection.balancer.RoundRobinLoadBalancer> {}
+          subscriptionConnectionMinimumIdleSize: 1
+          subscriptionConnectionPoolSize: 50
+          slaveConnectionMinimumIdleSize: 24
+          slaveConnectionPoolSize: 64
+          masterConnectionMinimumIdleSize: 24
+          masterConnectionPoolSize: 64
+          readMode: "SLAVE"
+          subscriptionMode: "SLAVE"
+          nodeAddresses:
+          - "redis://127.0.0.1:7004"
+          - "redis://127.0.0.1:7001"
+          - "redis://127.0.0.1:7000"
+          scanInterval: 1000
+          pingConnectionInterval: 0
+          keepAlive: false
+          tcpNoDelay: false
+        threads: 16
+        nettyThreads: 32
+        codec: !<org.redisson.codec.FstCodec> {}
+        transportMode: "NIO"
+
+
+
+
+
